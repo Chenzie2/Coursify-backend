@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String, Text, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import validates, relationship
 from datetime import datetime
-from . import db
+from app import db
 
 
 class User(db.Model):
@@ -16,9 +16,9 @@ class User(db.Model):
     role = db.Column(db.String(20), nullable=False)
 
     #Relationships
-    courses = db.relationship('Courses', back_populates='instructor')
+    courses = db.relationship('Course', back_populates='instructor')
     enrollments = db.relationship('Enrollment', back_populates='user')
-    review = db.relationship('Review', back_populates='user')
+    reviews = db.relationship('Review', back_populates='user')
 
     def to_dict(self):
         return {
@@ -33,7 +33,7 @@ class User(db.Model):
 
 
 
-class Course(db.model):
+class Course(db.Model):
     __tablename__ = 'courses'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
@@ -45,6 +45,7 @@ class Course(db.model):
 
     # Relationships
     instructor = db.relationship('User', back_populates='courses')
+    reviews = db.relationship('Review', back_populates='course')
 
     def to_dict(self):
         return {
@@ -64,9 +65,8 @@ class Enrollment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'), nullable=False)
-    enrollment_date = db.Column(db.DateTime, default=datetime)
+    enrollment_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     progress = db.Column(db.String, default=0.0)
-    completion_date = db.Column(db.DateTime, nullable=True)
     review_score = db.Column(db.Integer, nullable=True)
     certificate_issued = db.Column(db.Boolean, default=False)
 
@@ -80,7 +80,6 @@ class Enrollment(db.Model):
             'course_id': self.course_id,
             'enrollment_date': self.enrollment_date.isoformat(),
             'progress': self.progress,
-            'completion_date': self.completion_date.isoformat() if self.completion_date else None,
             'review_score': self.review_score,
             'certificate_issued': self.certificate_issued
         }
