@@ -31,6 +31,28 @@ class Courses(Resource):
         courses=Course.query.all()
         course_list=[course.to_dict() for course in courses]
         return make_response(course_list, 200)
+    
+
+
+class CourseById(Resource):
+    def get(self, id):
+        course=Course.query.filter_by(id=id).first()
+
+
+        if course:
+            return make_response(course.to_dict(), 200)
+        else:
+            return make_response({
+                "code": 404, 
+                "message": "Course not found",
+                "status":"unsuccessful"
+            }, 404)
+        
+
+api.add_resource(Courses, "/courses")
+api.add_resource(CourseById, "/courses/<int:id>")
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)   
