@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, make_response, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
@@ -19,6 +19,18 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 CORS(app)
+db.init_app(app)
+api=Api(app)
+
+
+
+# course resources
+
+class Courses(Resource):
+    def get(self):
+        courses=Course.query.all()
+        course_list=[course.to_dict() for course in courses]
+        return make_response(course_list, 200)
 
 if __name__ == '__main__':
     app.run(debug=True)   
