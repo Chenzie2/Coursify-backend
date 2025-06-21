@@ -35,3 +35,15 @@ def enroll_user():
 
     return jsonify({"message": "User enrolled successfully", "enrollment": new_enrollment.to_dict()}), 201
 
+# GET / enrollments/<user_id> : List all enrollments for current user 
+def get_user_enrollments():
+    user_id = request.view_args.get('user_id')
+    if not user_id:
+        return jsonify({"error": "User ID is required"}), 400
+
+    enrollments = Enrollment.query.filter_by(user_id=user_id).all()
+    if not enrollments:
+        return jsonify({"message": "No enrollments found for this user"}), 404
+
+    return jsonify({"enrollments": [enrollment.to_dict() for enrollment in enrollments]}), 200
+
