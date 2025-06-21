@@ -47,3 +47,26 @@ def get_user_enrollments():
 
     return jsonify({"enrollments": [enrollment.to_dict() for enrollment in enrollments]}), 200
 
+# PATCH / enrollments/<enrollment_id> : Update enrollment progress or and review score and if certificate issued
+def update_enrollment(id):
+    enrollment_id = request.view_args.get('enrollment_id')
+    data = request.get_json()
+
+    enrollment = Enrollment.query.get(enrollment_id)
+    if not enrollment:
+        return jsonify({"error": "Enrollment not found"}), 404
+
+    progress = data.get('progress')
+    review_score = data.get('review_score')
+    certificate_issued = data.get('certificate_issued')
+
+    if progress is not None:
+        enrollment.progress = progress
+    if review_score is not None:
+        enrollment.review_score = review_score
+    if certificate_issued is not None:
+        enrollment.certificate_issued = certificate_issued
+
+    db.session.commit()
+
+    return jsonify({"message": "Enrollment updated successfully", "enrollment": enrollment.to_dict()}), 200
