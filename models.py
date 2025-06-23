@@ -1,9 +1,22 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Integer, String, Text, DateTime, ForeignKey, Boolean
-from sqlalchemy.orm import validates, relationship
+from sqlalchemy import MetaData
 from datetime import datetime
-from app import db
+# from app import db
 
+
+convention = {
+    "ix": "ix_%(column_0_label)s",
+    "uq": "uq_%(table_name)s_%(column_0_name)s",
+    "ck": "ck_%(table_name)s_%(constraint_name)s",
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+    "pk": "pk_%(table_name)s",
+}
+
+
+metadata = MetaData(naming_convention=convention)
+
+# create the flask-sqlalchemy instance
+db = SQLAlchemy(metadata=metadata)
 
 class User(db.Model):
     __tablename__ = 'user'
