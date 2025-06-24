@@ -46,3 +46,7 @@ def delete(self, id):
     except Exception as e:
         db.session.rollback()
         return make_response({"error": str(e)}, 500)
+
+def register_course_routes(api):
+    api.add_resource(Courses, "/courses")
+    api.add_resource(CourseById, "/courses/<int:id>")
