@@ -33,3 +33,16 @@ class CourseById(Resource):
     except Exception as e:
         db.session.rollback()
         return make_response({"error": str(e)}, 500)
+
+def delete(self, id):
+    course = Course.query.filter_by(id=id).first()
+    if not course:
+        return make_response({"error": "Course not found"}, 404)
+
+    try:
+        db.session.delete(course)
+        db.session.commit()
+        return make_response({"message": "Course deleted successfully"}, 200)
+    except Exception as e:
+        db.session.rollback()
+        return make_response({"error": str(e)}, 500)
