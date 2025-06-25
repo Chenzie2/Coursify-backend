@@ -3,8 +3,7 @@ from flask import Flask
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_restful import Api
-from routes.course_routes import register_course_routes
-from models import db
+
 
 
 
