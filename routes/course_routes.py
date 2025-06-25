@@ -5,6 +5,7 @@ from flask_restful import Resource
 
 
 
+
 # course resources
 
 class Courses(Resource):
