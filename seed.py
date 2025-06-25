@@ -10,11 +10,22 @@ with app.app_context():
     # ---------- USERS ----------
     print("Creating users...")
     user1 = User(first_name='Edwin', last_name='Kipyego', age=30, gender='Male', email='edwin.kipyego@gmail.com', role='instructor')
+    user1.set_password("Edwin123")
+
     user2 = User(first_name='Joy', last_name='Malinda', age=23, gender='Female', email='koki@gmail.com', role='student')
+    user2.set_password("Joy123")
+
     user3 = User(first_name='Boniface', last_name='Muguro', age=55, gender='Male', email='boniface@gmail.com', role='student')
+    user3.set_password("BonnieKim123")
+
     user4 = User(first_name='Celestine', last_name='Mecheo', age=26, gender='Female', email='celestine@gmail.com', role='instructor')
+    user4.set_password("Celestine123")
+
     user5 = User(first_name='Aquila', last_name='Jedidia', age=28, gender='Male', email='aquila@gmail.com', role='instructor')
+    user5.set_password("jedaqsaul123")
+
     user6 = User(first_name='Grace', last_name='Zawadi', age=22, gender='Female', email='gracezawadi@gmail.com', role='student')
+    user6.set_password("gzawie123")
 
     users = [user1, user2, user3, user4, user5, user6]
     db.session.add_all(users)
@@ -89,4 +100,4 @@ with app.app_context():
     db.session.commit()
     print("Reviews created successfully.")
 
-print("Database seeded successfully.")
+    print("Database seeded successfully.")
