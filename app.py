@@ -2,27 +2,36 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
-from models import db, User, Course, Enrollment, Review
+from flask_restful import Api
 
-def create_app():
-    app = Flask(__name__)
 
-    # Config
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///coursify.db'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Import models and routes
+from routes.course_routes import Courses, CourseById
 
+
+app = Flask(__name__)
+    
+    # Configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///coursify.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    
     # Initialize extensions
     db.init_app(app)
     Migrate(app, db)
     CORS(app)
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+CORS(app)
 
-    # Optionally register Blueprints here
-    # from routes.auth_routes import auth_bp
-    # app.register_blueprint(auth_bp)
 
-    return app
+# Initialize Flask-RESTful API
+api = Api(app)
 
-# Optional: for development testing only
+
+# Add course resources
+api.add_resource(Courses, "/courses")
+api.add_resource(CourseById, "/courses/<int:id>")
+
 if __name__ == '__main__':
     app = create_app()
     app.run(debug=True)

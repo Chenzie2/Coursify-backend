@@ -18,6 +18,7 @@ with app.app_context():
     user3 = User(first_name='Boniface', last_name='Muguro', age=55, gender='Male', email='boniface@gmail.com', role='student')
     user3.set_password("BonnieKim123")
 
+    user3 = User(fiarst_name='Boniface', last_name='Muguro', age=55, gender='Male', email='boniface@gmail.com', role='student')
     user4 = User(first_name='Celestine', last_name='Mecheo', age=26, gender='Female', email='celestine@gmail.com', role='instructor')
     user4.set_password("Celestine123")
 
