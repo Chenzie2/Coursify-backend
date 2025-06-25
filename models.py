@@ -1,9 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Integer, String, Text, DateTime, ForeignKey, Boolean
-from sqlalchemy.orm import validates, relationship
 from datetime import datetime
-from app import db
 
+db = SQLAlchemy()
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -15,7 +13,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     role = db.Column(db.String(20), nullable=False)
 
-    #Relationships
+    # Relationships
     courses = db.relationship('Course', back_populates='instructor')
     enrollments = db.relationship('Enrollment', back_populates='user')
     reviews = db.relationship('Review', back_populates='user')
@@ -31,8 +29,6 @@ class User(db.Model):
             'role': self.role
         }
 
-
-
 class Course(db.Model):
     __tablename__ = 'courses'
     id = db.Column(db.Integer, primary_key=True)
@@ -43,7 +39,6 @@ class Course(db.Model):
     lesson_count = db.Column(db.Integer, nullable=False)
     instructor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    # Relationships
     instructor = db.relationship('User', back_populates='courses')
     reviews = db.relationship('Review', back_populates='course')
 
@@ -58,19 +53,16 @@ class Course(db.Model):
             'instructor_id': self.instructor_id
         }
 
-
-
 class Enrollment(db.Model):
     __tablename__ = 'enrollment'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'), nullable=False)
     enrollment_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    progress = db.Column(db.String, default=0.0)
+    progress = db.Column(db.String, default="0.0")
     review_score = db.Column(db.Integer, nullable=True)
     certificate_issued = db.Column(db.Boolean, default=False)
 
-    # Relationships
     user = db.relationship('User', back_populates='enrollments')
 
     def to_dict(self):
@@ -91,7 +83,6 @@ class Review(db.Model):
     rating = db.Column(db.Float, nullable=False)
     comment = db.Column(db.Text, nullable=True)
 
-    # Relationships
     user = db.relationship('User', back_populates='reviews')
     course = db.relationship('Course', back_populates='reviews')
 
@@ -103,9 +94,3 @@ class Review(db.Model):
             'rating': self.rating,
             'comment': self.comment
         }
-    
-
-
-
-
-
