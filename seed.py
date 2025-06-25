@@ -11,7 +11,7 @@ with app.app_context():
     print("Creating users...")
     user1 = User(first_name='Edwin', last_name='Kipyego', age=30, gender='Male', email='edwin.kipyego@gmail.com', role='instructor')
     user2 = User(first_name='Joy', last_name='Malinda', age=23, gender='Female', email='koki@gmail.com', role='student')
-    user3 = User(first_name='Boniface', last_name='Muguro', age=55, gender='Male', email='boniface@gmail.com', role='student')
+    user3 = User(fiarst_name='Boniface', last_name='Muguro', age=55, gender='Male', email='boniface@gmail.com', role='student')
     user4 = User(first_name='Celestine', last_name='Mecheo', age=26, gender='Female', email='celestine@gmail.com', role='instructor')
     user5 = User(first_name='Aquila', last_name='Jedidia', age=28, gender='Male', email='aquila@gmail.com', role='instructor')
     user6 = User(first_name='Grace', last_name='Zawadi', age=22, gender='Female', email='gracezawadi@gmail.com', role='student')
