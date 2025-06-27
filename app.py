@@ -6,12 +6,21 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from flask_migrate import Migrate
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # === App Setup ===
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///project.db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
+    'DATABASE_URL',
+    'sqlite:///project.db'
+)
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'dev-secret-key')
+app.config['FLASK_ENV'] = os.getenv('FLASK_ENV', 'development')
 
 # === Initialize Extensions ===
 from models import db, bcrypt
@@ -23,13 +32,17 @@ api = Api(app)
 jwt = JWTManager(app)
 
 
+CORS(
+    app,
+    supports_credentials=True,
+    resources={r"/*": {"origins": os.getenv('CORS_ORIGIN', 'http://127.0.0.1:5173')}}
+)
 # === Register Resources ===
 from routes.auth_routes import Register, Login, Logout, Me
 from routes.course_routes import register_course_routes
 from routes.enrollment_routes import register_enrollment_routes
 from routes.user_routes import register_user_routes
 
-CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://127.0.0.1:5173"}})
 
 api.add_resource(Register, "/signup")
 api.add_resource(Login, "/login")
@@ -48,4 +61,4 @@ def home():
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    app.run(debug=(app.config['FLASK_ENV'] == 'development'))
