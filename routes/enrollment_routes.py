@@ -4,6 +4,16 @@ from models import db, Enrollment, Course, User
 from datetime import datetime
 
 
+class AllEnrollments(Resource):
+    def get(self):
+        try:
+            enrollments = Enrollment.query.all()
+            return make_response({
+                "enrollments": [e.to_dict() for e in enrollments]
+            }, 200)
+        except Exception as e:
+            return make_response({"error": "Failed to fetch enrollments", "details": str(e)}, 500)
+
 class EnrollUser(Resource):
     def post(self):
         data = request.get_json()
@@ -26,7 +36,7 @@ class EnrollUser(Resource):
             enrollment = Enrollment(
                 user_id=user_id,
                 course_id=course_id,
-                progress="0.0",  # Keeping it string to match your model
+                progress="0.0", 
                 review_score=None,
                 certificate_issued=False,
                 enrollment_date=datetime.utcnow()
@@ -86,3 +96,5 @@ def register_enrollment_routes(api):
     api.add_resource(EnrollUser, '/enrollments')
     api.add_resource(UserEnrollments, '/enrollments/<int:user_id>')
     api.add_resource(UpdateEnrollment, '/enrollments/<int:enrollment_id>')
+    api.add_resource(AllEnrollments, '/enrollments/all')
+
