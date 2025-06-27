@@ -45,3 +45,8 @@ class Courses(Resource):
             db.session.rollback()
             print("ERROR in POST /courses:", str(e))
             return make_response({"error": str(e)}, 500)
+
+
+
+def register_course_routes(api):
+    api.add_resource(Courses, "/courses")
