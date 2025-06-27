@@ -22,16 +22,24 @@ migrate = Migrate(app, db)
 api = Api(app)
 jwt = JWTManager(app)
 
+
+# === Register Resources ===
+from routes.auth_routes import Register, Login, Logout, Me
+from routes.course_routes import register_course_routes
+from routes.enrollment_routes import register_enrollment_routes
+from routes.user_routes import register_user_routes
+
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://127.0.0.1:5173"}})
 
-# ✅ Register only working routes
-from routes.auth_routes import Register, Login, Logout, Me
-
-
-api.add_resource(Register, "/register")
+api.add_resource(Register, "/signup")
 api.add_resource(Login, "/login")
 api.add_resource(Logout, "/logout")
 api.add_resource(Me, "/me")
+
+register_course_routes(api)
+register_enrollment_routes(api)
+register_user_routes(api)
+
 
 @app.route("/")
 def home():
