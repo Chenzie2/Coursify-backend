@@ -19,22 +19,17 @@ db.init_app(app)
 bcrypt.init_app(app)
 
 migrate = Migrate(app, db)
-
-# === CORS Setup ===
-CORS(
-    app,
-    supports_credentials=True,
-    resources={r"/*": {"origins": "http://127.0.0.1:5173"}}
-)
-
 api = Api(app)
 jwt = JWTManager(app)
+
 
 # === Register Resources ===
 from routes.auth_routes import Register, Login, Logout, Me
 from routes.course_routes import register_course_routes
 from routes.enrollment_routes import register_enrollment_routes
 from routes.user_routes import register_user_routes
+
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://127.0.0.1:5173"}})
 
 api.add_resource(Register, "/signup")
 api.add_resource(Login, "/login")
@@ -45,11 +40,11 @@ register_course_routes(api)
 register_enrollment_routes(api)
 register_user_routes(api)
 
+
 @app.route("/")
 def home():
     return {"message": "API is running!"}
 
-# === Run App ===
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
