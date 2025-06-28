@@ -12,22 +12,50 @@ with app.app_context():
     user1 = User(first_name='Edwin', last_name='Kipyego', age=30, gender='Male', email='edwin.kipyego@gmail.com', role='instructor')
     user1.set_password("Edwin123")
 
-    user2 = User(first_name='Joy', last_name='Malinda', age=23, gender='Female', email='koki@gmail.com', role='student')
-    user2.set_password("Joy123")
+    user2 = User(first_name='Celestine', last_name='Mecheo', age=26, gender='Female', email='celestine@gmail.com', role='instructor')
+    user2.set_password("Celestine123")
 
-    user3 = User(first_name='Boniface', last_name='Muguro', age=55, gender='Male', email='boniface@gmail.com', role='student')
-    user3.set_password("BonnieKim123")
+    user3 = User(first_name='Aquila', last_name='Jedidia', age=28, gender='Male', email='aquila@gmail.com', role='instructor')
+    user3.set_password("jedaqsaul123")
 
-    user4 = User(first_name='Celestine', last_name='Mecheo', age=26, gender='Female', email='celestine@gmail.com', role='instructor')
-    user4.set_password("Celestine123")
+    user4 = User(first_name='Naomi', last_name='Achieng', age=31, gender='Female', email='naomi.achieng@gmail.com', role='instructor')
+    user4.set_password("naomi20")
 
-    user5 = User(first_name='Aquila', last_name='Jedidia', age=28, gender='Male', email='aquila@gmail.com', role='instructor')
-    user5.set_password("jedaqsaul123")
+    user5 = User(first_name='James', last_name='Ochieng', age=35, gender='Male', email='jamesochieng@gmail.com', role='instructor')
+    user5.set_password("jimmyoch123")
 
-    user6 = User(first_name='Grace', last_name='Zawadi', age=22, gender='Female', email='gracezawadi@gmail.com', role='student')
-    user6.set_password("gzawie123")
+    user6 = User(first_name='Joy', last_name='Malinda', age=23, gender='Female', email='koki@gmail.com', role='student')
+    user6.set_password("Joy123")
 
-    users = [user1, user2, user3, user4, user5, user6]
+    user7 = User(first_name='Boniface', last_name='Muguro', age=27, gender='Male', email='boniface@gmail.com', role='student')
+    user7.set_password("BonnieKim123")
+
+    user8 = User(first_name='Grace', last_name='Zawadi', age=22, gender='Female', email='gracezawadi@gmail.com', role='student')
+    user8.set_password("gzawie123")
+
+    user9 = User(first_name='Daniel', last_name='Odhiambo', age=29, gender='Male', email='dan.odhiambo@gmail.com', role='student')
+    user9.set_password("dan123")
+
+    user10 = User(first_name='Lucy', last_name='Wambui', age=24, gender='Female', email='lucywambui@gmail.com', role='student')
+    user10.set_password("lucypass")
+
+    user11 = User(first_name='Kevin', last_name='Wanyonyi', age=34, gender='Male', email='kevinw@gmail.com', role='student')
+    user11.set_password("kevinpass")
+
+    user12 = User(first_name='Brenda', last_name='Atieno', age=25, gender='Female', email='brendaatieno@gmail.com', role='student')
+    user12.set_password("brenda24")
+
+    user13 = User(first_name='Brian', last_name='Kimani', age=19, gender='Male', email='briankimani@gmail.com', role='student')
+    user13.set_password("brian123")
+
+    user14 = User(first_name='Faith', last_name='Mwende', age=21, gender='Female', email='faithmwende@gmail.com', role='student')
+    user14.set_password("faithpass")
+
+    user15 = User(first_name='Leon', last_name='Mburu', age=26, gender='Male', email='leonmburu@gmail.com', role='student')
+    user15.set_password("leonpass")
+
+    users = [user1, user2, user3, user4, user5, user6, user7, user8, user9, user10,
+             user11, user12, user13, user14, user15]
     db.session.add_all(users)
     db.session.commit()
     print("Users created successfully.")
@@ -59,27 +87,26 @@ with app.app_context():
     # ---------- ENROLLMENTS ----------
     print("Creating enrollments...")
     enrollments = [
-        Enrollment(user_id=user2.id, course_id=courses[0].id, progress=50, review_score=7, certificate_issued=True),
-        Enrollment(user_id=user2.id, course_id=courses[2].id, progress=80, review_score=8, certificate_issued=True),
-        Enrollment(user_id=user2.id, course_id=courses[6].id, progress=30, review_score=9, certificate_issued=False),
-
-        Enrollment(user_id=user3.id, course_id=courses[1].id, progress=70, review_score=10, certificate_issued=True),
-        Enrollment(user_id=user3.id, course_id=courses[3].id, progress=40, review_score=7, certificate_issued=False),
-
-        Enrollment(user_id=user5.id, course_id=courses[4].id, progress=90, review_score=9, certificate_issued=True),
-        Enrollment(user_id=user5.id, course_id=courses[6].id, progress=65, review_score=8, certificate_issued=True),
-
-        Enrollment(user_id=user6.id, course_id=courses[5].id, progress=70, review_score=7, certificate_issued=True),
-        Enrollment(user_id=user6.id, course_id=courses[7].id, progress=20, review_score=6, certificate_issued=False),
-        Enrollment(user_id=user6.id, course_id=courses[8].id, progress=50, review_score=9, certificate_issued=True),
-
-        Enrollment(user_id=user3.id, course_id=courses[10].id, progress=50, review_score=9, certificate_issued=True),
-        Enrollment(user_id=user5.id, course_id=courses[11].id, progress=100, review_score=10, certificate_issued=True),
+        Enrollment(user_id=user6.id, course_id=1, progress=50, review_score=7, certificate_issued=True),
+        Enrollment(user_id=user6.id, course_id=3, progress=80, review_score=8, certificate_issued=True),
+        Enrollment(user_id=user7.id, course_id=2, progress=60, review_score=9, certificate_issued=True),
+        Enrollment(user_id=user8.id, course_id=6, progress=70, review_score=7, certificate_issued=True),
+        Enrollment(user_id=user8.id, course_id=8, progress=20, review_score=6, certificate_issued=False),
+        Enrollment(user_id=user9.id, course_id=4, progress=75, review_score=9, certificate_issued=True),
+        Enrollment(user_id=user10.id, course_id=5, progress=90, review_score=8, certificate_issued=True),
+        Enrollment(user_id=user11.id, course_id=7, progress=65, review_score=9, certificate_issued=True),
+        Enrollment(user_id=user12.id, course_id=1, progress=55, review_score=7, certificate_issued=True),
+        Enrollment(user_id=user13.id, course_id=3, progress=45, review_score=7, certificate_issued=False),
+        Enrollment(user_id=user14.id, course_id=2, progress=80, review_score=9, certificate_issued=True),
+        Enrollment(user_id=user15.id, course_id=4, progress=50, review_score=6, certificate_issued=False),
+        Enrollment(user_id=user10.id, course_id=9, progress=60, review_score=8, certificate_issued=True),
+        Enrollment(user_id=user9.id, course_id=10, progress=40, review_score=7, certificate_issued=False),
+        Enrollment(user_id=user7.id, course_id=12, progress=85, review_score=9, certificate_issued=True),
     ]
     db.session.add_all(enrollments)
     db.session.commit()
     print("Enrollments created successfully.")
-
+    
     # ---------- REVIEWS ----------
     print("Creating reviews...")
     reviews = [
