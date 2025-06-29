@@ -92,9 +92,15 @@ class Courses(Resource):
             db.session.rollback()
             print("ERROR in POST /courses:", str(e))
             return make_response({"error": str(e)}, 500)
-
-
+        
+class CoursesByInstructor(Resource):
+    def get(self, instructor_id):
+        courses = Course.query.filter_by(instructor_id=instructor_id).all()
+        if not courses:
+            return make_response({"message": "No courses found for this instructor"}, 404)
+        return make_response([course.to_dict() for course in courses], 200)
 
 def register_course_routes(api):
     api.add_resource(Courses, "/courses")
     api.add_resource(CourseById, "/courses/<int:id>")
+    api.add_resource(CoursesByInstructor, "/instructors/<int:instructor_id>/courses")
