@@ -60,10 +60,9 @@ class UserEnrollments(Resource):
             enrollments = Enrollment.query.filter_by(user_id=user_id).all()
             if not enrollments:
                 return make_response({"message": "No enrollments found for this user"}, 404)
-
-            return make_response({
-                "enrollments": [e.to_dict() for e in enrollments]
-            }, 200)
+            
+            return make_response([e.to_dict() for e in enrollments], 200)
+        
         except Exception as e:
             return make_response({"error": "Failed to fetch enrollments", "details": str(e)}, 500)
 
@@ -90,6 +89,33 @@ class UpdateEnrollment(Resource):
         except Exception as e:
             db.session.rollback()
             return make_response({"error": "Failed to update enrollment", "details": str(e)}, 500)
+        
+
+class CourseStudents(Resource):
+    def get(self, course_id):
+        try:
+            enrollments = Enrollment.query.filter_by(course_id=course_id).all()
+
+            if not enrollments:
+                return make_response({"message": "No students enrolled in this course"}, 404)
+
+            students = [
+                {
+                    "id": e.user.id,
+                    "name": f"{e.user.first_name} {e.user.last_name}",
+                    "email": e.user.email,
+                    "progress": e.progress
+                }
+                for e in enrollments
+            ]
+
+            return make_response({"students": students}, 200)
+
+        except Exception as e:
+            return make_response({
+                "error": "Failed to fetch students",
+                "details": str(e)
+            }, 500)
 
 
 def register_enrollment_routes(api):
@@ -97,4 +123,5 @@ def register_enrollment_routes(api):
     api.add_resource(UserEnrollments, '/enrollments/<int:user_id>')
     api.add_resource(UpdateEnrollment, '/enrollments/<int:enrollment_id>')
     api.add_resource(AllEnrollments, '/enrollments/all')
+    api.add_resource(CourseStudents, '/courses/<int:course_id>/students')
 

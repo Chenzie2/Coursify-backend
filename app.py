@@ -33,6 +33,7 @@ from routes.auth_routes import Register, Login, Logout, Me
 from routes.course_routes import register_course_routes
 from routes.enrollment_routes import register_enrollment_routes
 from routes.user_routes import register_user_routes
+from routes.course_routes import register_course_routes
 
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://127.0.0.1:5173"}})
 
