@@ -76,7 +76,7 @@ coursify-backend/
 ### Installation
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/coursify-backend.git
+git@github.com:Chenzie2/Coursify-backend.git
 cd coursify-backend
 ```
 
