@@ -60,10 +60,9 @@ class UserEnrollments(Resource):
             enrollments = Enrollment.query.filter_by(user_id=user_id).all()
             if not enrollments:
                 return make_response({"message": "No enrollments found for this user"}, 404)
-
-            return make_response({
-                "enrollments": [e.to_dict() for e in enrollments]
-            }, 200)
+            
+            return make_response([e.to_dict() for e in enrollments], 200)
+        
         except Exception as e:
             return make_response({"error": "Failed to fetch enrollments", "details": str(e)}, 500)
 

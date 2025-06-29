@@ -54,7 +54,14 @@ class Me(Resource):
     @jwt_required()
     def get(self):
         identity = get_jwt_identity()
-        user = User.query.get(identity["id"])
+        print("IDENTITY:", identity)  
+
+        user_id = identity["id"] if isinstance(identity, dict) else identity
+
+        user = User.query.get(user_id)
+
         if not user:
             return {"error": "User not found"}, 404
+
         return user.to_dict(), 200
+
