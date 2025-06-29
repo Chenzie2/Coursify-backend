@@ -32,11 +32,9 @@ api = Api(app)
 jwt = JWTManager(app)
 
 
-CORS(
-    app,
-    supports_credentials=True,
-    resources={r"/*": {"origins": os.getenv('CORS_ORIGIN', 'http://127.0.0.1:5173')}}
-)
+CORS(app, supports_credentials=True, resources={
+    r"/*": {"origins": ["http://127.0.0.1:5173", "http://localhost:5173"]}
+})
 # === Register Resources ===
 from routes.auth_routes import Register, Login, Logout, Me
 from routes.course_routes import register_course_routes
