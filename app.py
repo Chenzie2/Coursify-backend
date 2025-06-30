@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -9,7 +12,7 @@ from flask_migrate import Migrate
 
 # === App Setup ===
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///project.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'dev-secret-key')
 
@@ -22,8 +25,6 @@ migrate = Migrate(app, db)
 api = Api(app)
 jwt = JWTManager(app)
 
-
-
 CORS(app, supports_credentials=True, resources={
     r"/*": {"origins": ["http://127.0.0.1:5173", "http://localhost:5173"]}
 })
@@ -33,9 +34,6 @@ from routes.auth_routes import Register, Login, Logout, Me
 from routes.course_routes import register_course_routes
 from routes.enrollment_routes import register_enrollment_routes
 from routes.user_routes import register_user_routes
-from routes.course_routes import register_course_routes
-
-CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://127.0.0.1:5173"}})
 
 api.add_resource(Register, "/signup")
 api.add_resource(Login, "/login")
@@ -46,7 +44,6 @@ register_course_routes(api)
 register_enrollment_routes(api)
 register_user_routes(api)
 
-
 @app.route("/")
 def home():
     return {"message": "API is running!"}
@@ -54,4 +51,5 @@ def home():
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
+    print("Connected to DB:", os.getenv("DATABASE_URL")) 
     app.run(debug=True)
