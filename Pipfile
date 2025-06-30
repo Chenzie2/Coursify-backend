@@ -13,8 +13,8 @@ flask-migrate = "*"
 flask = "*"
 flask-cors = "*"
 gunicorn = "*"
-psycopg2-binary = "*"
 python-dotenv = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
