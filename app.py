@@ -26,7 +26,7 @@ api = Api(app)
 jwt = JWTManager(app)
 
 CORS(app, supports_credentials=True, resources={
-    r"/*": {"origins": ["http://127.0.0.1:5173", "http://localhost:5173"]}
+    r"/*": {"origins": ["http://127.0.0.1:5173", "http://localhost:5173", "https://coursify-frontend-psi.vercel.app"]}
 })
 
 # === Register Resources ===
