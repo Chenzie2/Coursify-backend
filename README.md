@@ -192,5 +192,8 @@ SECRET_KEY=strong_production_secret
 DATABASE_URI=postgresql://user:pass@localhost/dbname
 ```
 
+# Frontend link
+https://github.com/Chenzie2/Coursify-frontend
+
 # License
 MIT License © 2025 - Coursify Team
