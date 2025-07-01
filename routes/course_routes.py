@@ -96,6 +96,7 @@ class Courses(Resource):
 class CoursesByInstructor(Resource):
     def get(self, instructor_id):
         courses = Course.query.filter_by(instructor_id=instructor_id).all()
+        
         return make_response([course.to_dict() for course in courses], 200)
 
 
