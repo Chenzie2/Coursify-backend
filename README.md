@@ -4,6 +4,12 @@ This repository contains the backend API for **Coursify** - a learning platform 
 
 ---
 
+
+# Frontend link
+https://github.com/Chenzie2/Coursify-frontend
+
+---
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Features](#-features)
@@ -191,9 +197,7 @@ FLASK_ENV=production
 SECRET_KEY=strong_production_secret
 DATABASE_URI=postgresql://user:pass@localhost/dbname
 ```
-
-# Frontend link
-https://github.com/Chenzie2/Coursify-frontend
+---
 
 # License
 MIT License © 2025 - Coursify Team
