@@ -10,13 +10,11 @@ from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from flask_migrate import Migrate
 
-# === App Setup ===
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URI")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL") or os.getenv("DATABASE_URI")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'dev-secret-key')
 
-# === Initialize Extensions ===
 from models import db, bcrypt
 db.init_app(app)
 bcrypt.init_app(app)
@@ -29,7 +27,6 @@ CORS(app, supports_credentials=True, resources={
     r"/*": {"origins": ["http://127.0.0.1:5173", "http://localhost:5173", "https://coursify-frontend-psi.vercel.app"]}
 })
 
-# === Register Resources ===
 from routes.auth_routes import Register, Login, Logout, Me
 from routes.course_routes import register_course_routes
 from routes.enrollment_routes import register_enrollment_routes
@@ -51,5 +48,5 @@ def home():
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-    print("Connected to DB:", os.getenv("DATABASE_URL")) 
+    print("Connected to DB:", os.getenv("DATABASE_URL"))
     app.run(debug=True)
