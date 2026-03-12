@@ -32,9 +32,9 @@ class User(db.Model, SerializerMixin):
     password_history = db.relationship('PasswordHistory', back_populates='user', cascade="all, delete-orphan")
 
     def set_password(self, password):
-        if self.password_hash:
+        if self.id and self.password_hash:
             history = PasswordHistory(user_id=self.id, old_password_hash=self.password_hash)
-            db.session.add(history)
+        db.session.add(history)
         self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def check_password(self, password):
